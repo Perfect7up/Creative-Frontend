@@ -1,0 +1,10 @@
+node_modules
+dist
+.vscode
+.env
+.env.production
+.env.debug
+.env.local
+pnpm-store
+.DS_Store
+*.log
