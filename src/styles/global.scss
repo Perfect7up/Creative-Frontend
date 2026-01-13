@@ -1,0 +1,30 @@
+$primary-color: #1d4ed8;
+$secondary-color: #facc15;
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f3f4f6;
+  color: #111827;
+  margin: 0;
+  padding: 0;
+}
+
+.btn {
+  @include flex-center;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background-color: $primary-color;
+  color: white;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+}
