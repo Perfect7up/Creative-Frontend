@@ -120,11 +120,18 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        CreativeAuthApiEndpointsAuthVerifyEmailVerifyEmailResponse: {
+            Message?: string;
+        };
+        CreativeAuthApiEndpointsAuthVerifyEmailVerifyEmailRequest: Record<string, never>;
         CreativeAuthApiEndpointsAuthResetPasswordResetPasswordRequest: {
             Token?: string;
             NewPassword?: string;
         };
-        CreativeAuthApplicationFeaturesRegisterRegisterRequest: {
+        CreativeAuthApiEndpointsAuthRegisterRegisterResponse: {
+            Message?: string;
+        };
+        CreativeAuthApiEndpointsAuthRegisterRegisterRequest: {
             Email?: string;
             Password?: string;
             FirstName?: string;
@@ -164,19 +171,23 @@ export type $defs = Record<string, never>;
 export interface operations {
     CreativeAuthApiEndpointsAuthVerifyEmailVerifyEmail: {
         parameters: {
-            query?: never;
+            query: {
+                Token: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description No Content */
-            204: {
+            /** @description Success */
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["CreativeAuthApiEndpointsAuthVerifyEmailVerifyEmailResponse"];
+                };
             };
         };
     };
@@ -211,16 +222,18 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["CreativeAuthApplicationFeaturesRegisterRegisterRequest"];
+                "application/json": components["schemas"]["CreativeAuthApiEndpointsAuthRegisterRegisterRequest"];
             };
         };
         responses: {
-            /** @description No Content */
-            204: {
+            /** @description Success */
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["CreativeAuthApiEndpointsAuthRegisterRegisterResponse"];
+                };
             };
         };
     };

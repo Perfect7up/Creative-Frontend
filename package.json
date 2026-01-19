@@ -11,7 +11,7 @@
     "prepare": "husky install",
     "test": "vitest run",
     "test:watch": "vitest",
-    "generate-api-auth": "pnpm exec openapi-qraft src/api/openapi-specs/auth.json --output-dir src/api/services/auth --plugin tanstack-query-react --plugin openapi-typescript --openapi-types-import-path ./schema"
+    "generate-api-auth": "pnpm exec openapi-qraft src/api/openapi-specs/auth.json --output-dir src/api/services/auth --plugin tanstack-query-react --plugin openapi-typescript --openapi-types-import-path ../schema"
   },
   "lint-staged": {
     "*.{ts,tsx,}": [

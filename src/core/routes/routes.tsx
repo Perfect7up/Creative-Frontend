@@ -6,6 +6,10 @@ import DashboardLayout from '~/modules/dashboard/components/layout/dashboard-lay
 import Home from '~/modules/landing/routes/home/home';
 import { RegisterPage } from '~/modules/acount/routes/register/register';
 import DashboardHome from '~/modules/dashboard/dashboard';
+import VerifyEmailPage from '~/modules/acount/routes/verify-email/verify-emai';
+import LoginPage from '~/modules/acount/routes/login/login';
+import ForgotPasswordPage from '~/modules/acount/routes/forgot-password/forgot-password';
+import ResetPasswordPage from '~/modules/acount/routes/reset-password/reset-password';
 
 const LoadingFallback = () => (
   <div style={{ display: 'flex', height: '100vh', alignItems: 'center', justifyContent: 'center' }}>
@@ -20,8 +24,12 @@ const AppRouter = () => {
         <Routes>
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />
-            <Route path="/account/register" element={<RegisterPage />} />
           </Route>
+          <Route path="/account/register" element={<RegisterPage />} />
+          <Route path="/account/verify-email" element={<VerifyEmailPage />} />
+          <Route path="/account/login" element={<LoginPage />} />
+          <Route path="/account/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/account/reset-password" element={<ResetPasswordPage />} />
 
           <Route element={<DashboardLayout />}>
             <Route path="/dashboard" element={<DashboardHome />} />

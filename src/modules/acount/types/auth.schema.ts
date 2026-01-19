@@ -1,4 +1,4 @@
-import type { components } from '../../../api/services/auth/schema';
+import type { components } from '~/api/services/auth/schema';
 
 type Schemas = components['schemas'];
 
@@ -8,10 +8,9 @@ export type AuthResponse = Schemas['CreativeAuthApplicationFeaturesLoginAuthResp
 export type RefreshTokenRequest =
   Schemas['CreativeAuthApiEndpointsAuthRefreshTokenRefreshTokenRequest'];
 
-// 2. Registration
-export type RegisterRequest = Schemas['CreativeAuthApplicationFeaturesRegisterRegisterRequest'];
+export type RegisterRequest = Schemas['CreativeAuthApiEndpointsAuthRegisterRegisterRequest'];
+export type RegisterResponse = Schemas['CreativeAuthApiEndpointsAuthRegisterRegisterResponse'];
 
-// 3. Password Management
 export type ForgotPasswordRequest =
   Schemas['CreativeAuthApiEndpointsAuthForgotPasswordForgotPasswordRequest'];
 export type ForgotPasswordResponse =
@@ -19,5 +18,4 @@ export type ForgotPasswordResponse =
 export type ResetPasswordRequest =
   Schemas['CreativeAuthApiEndpointsAuthResetPasswordResetPasswordRequest'];
 
-// 4. Logout & Verification
 export type LogoutRequest = Schemas['CreativeAuthApiEndpointsAuthLogoutLogoutRequest'];

@@ -3,7 +3,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useAuth } from '~/modules/acount/hook/use-auth';
 import { registerSchema, type RegisterFormData } from '../../schema/auth.schema';
 
-export const RegisterForm = () => {
+interface RegisterFormProps {
+  onSuccess?: () => void;
+}
+export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
   const { register: registerUser, status } = useAuth();
 
   const {
@@ -18,7 +21,14 @@ export const RegisterForm = () => {
   const onSubmit = (data: RegisterFormData) => {
     const { ConfirmPassword, ...apiPayload } = data;
     void ConfirmPassword;
-    registerUser(apiPayload);
+    registerUser(
+      { body: apiPayload },
+      {
+        onSuccess: () => {
+          onSuccess?.();
+        },
+      },
+    );
   };
 
   return (
