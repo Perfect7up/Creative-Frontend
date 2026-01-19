@@ -7,6 +7,11 @@
     "module": "ESNext",
     "types": ["vite/client"],
     "skipLibCheck": true,
+    "composite": true,
+    "baseUrl": ".", // This tells TS that the root is the folder where this file sits
+    "paths": {
+      "~/*": ["./src/*"] // Note the ./ before src
+    },
 
     /* Bundler mode */
     "moduleResolution": "bundler",

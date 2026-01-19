@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "prepare": "husky install",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "generate-api-auth": "pnpm exec openapi-qraft src/api/openapi-specs/auth.json --output-dir src/api/services/auth --plugin tanstack-query-react --plugin openapi-typescript --openapi-types-import-path ./schema"
   },
   "lint-staged": {
     "*.{ts,tsx,}": [
@@ -21,16 +22,26 @@
     ]
   },
   "dependencies": {
+    "@ant-design/icons": "^6.1.0",
+    "@openapi-qraft/react": "^2.14.0",
+    "@sentry/react": "^10.34.0",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-query": "^5.90.16",
+    "antd": "^6.2.0",
+    "axios": "^1.13.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "tailwindcss": "^4.1.18"
+    "react-router-dom": "^7.12.0",
+    "tailwindcss": "^4.1.18",
+    "uuid": "^13.0.0",
+    "zustand": "^5.0.10"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.3.1",
     "@commitlint/config-conventional": "^20.3.1",
     "@eslint/js": "^9.39.1",
+    "@openapi-qraft/cli": "^2.14.0",
+    "@openapi-qraft/tanstack-query-react-types": "^2.14.0",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.1",
     "@testing-library/user-event": "^14.6.1",
@@ -38,6 +49,7 @@
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
+    "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^5.1.2",
     "@vitejs/plugin-react-swc": "^4.2.2",
     "@vitest/ui": "^4.0.17",
@@ -48,11 +60,13 @@
     "husky": "^9.1.7",
     "jsdom": "^27.4.0",
     "lint-staged": "^16.2.7",
+    "openapi-typescript": "^7.10.1",
     "prettier": "^3.7.4",
     "sass": "^1.97.2",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.4",
     "vite": "^7.2.4",
+    "vite-tsconfig-paths": "^6.0.4",
     "vitest": "^4.0.17"
   }
 }

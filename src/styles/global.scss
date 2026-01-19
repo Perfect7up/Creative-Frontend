@@ -1,30 +1,19 @@
-$primary-color: #1d4ed8;
-$secondary-color: #facc15;
-
-@mixin flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+:root {
+  --nav-bg: rgba(255, 255, 255, 0.7);
+  --nav-border: rgba(226, 232, 240, 0.8);
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --primary-color: #1d4ed8;
+  --primary-gradient: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%);
+  --btn-shadow: 0 10px 20px -5px rgba(29, 78, 216, 0.4);
+  color-scheme: light;
 }
 
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: #f3f4f6;
-  color: #111827;
-  margin: 0;
-  padding: 0;
-}
-
-.btn {
-  @include flex-center;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  background-color: $primary-color;
-  color: white;
-  font-weight: 600;
-  transition: background-color 0.2s ease;
-
-  &:hover {
-    background-color: darken($primary-color, 10%);
-  }
+.dark {
+  --nav-bg: rgba(15, 23, 42, 0.8);
+  --nav-border: rgba(51, 65, 85, 0.5);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --btn-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
 }

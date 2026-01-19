@@ -1,1 +1,93 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@import './global.scss';
+
+@theme {
+  --color-primary: var(--primary-color);
+}
+
+.btn-get-started {
+  background: var(--primary-gradient) !important;
+  border: none !important;
+  color: white !important;
+  box-shadow: var(--btn-shadow);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+.btn-get-started:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 15px 30px -5px rgba(29, 78, 216, 0.5);
+  filter: brightness(1.1);
+}
+
+.btn-get-started:active {
+  transform: translateY(-1px) scale(1);
+}
+
+.theme-switcher-btn {
+  background: var(--nav-bg) !important;
+  border: 1px solid var(--nav-border) !important;
+  color: var(--text-muted) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease !important;
+}
+
+.theme-switcher-btn .anticon {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-switcher-btn:hover {
+  border-color: var(--primary-color) !important;
+  color: var(--primary-color) !important;
+  background: white !important;
+}
+
+.dark .theme-switcher-btn:hover {
+  background: #1e293b !important;
+}
+
+.theme-switcher-btn:hover .anticon {
+  transform: rotate(70deg);
+}
+
+.modern-menu {
+  background: transparent !important;
+  border: none !important;
+}
+
+.modern-menu .ant-menu-item {
+  color: var(--text-muted) !important;
+  font-weight: 500;
+}
+
+.modern-menu .ant-menu-item:hover {
+  color: var(--primary-color) !important;
+  background: rgba(29, 78, 216, 0.08) !important;
+  border-radius: 12px;
+}
+
+.footer-link {
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.footer-link:hover {
+  color: var(--primary-blue);
+  transform: translateX(4px);
+}
+
+.social-icon-btn {
+  background: var(--nav-bg) !important;
+  border: 1px solid var(--nav-border) !important;
+  color: var(--text-muted) !important;
+  transition: all 0.3s ease !important;
+}
+
+.social-icon-btn:hover {
+  color: var(--primary-blue) !important;
+  border-color: var(--primary-blue) !important;
+  transform: translateY(-3px);
+}
