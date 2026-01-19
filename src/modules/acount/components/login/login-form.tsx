@@ -8,7 +8,7 @@ import { useAuth } from '~/modules/acount/hook/use-auth';
 import { loginSchema, type LoginFormData } from '../../schema/auth.schema';
 
 export const LoginForm: React.FC = () => {
-  const { login, status, errors: apiErrors } = useAuth();
+  const { login, status, apiErrorMessages } = useAuth();
   const navigate = useNavigate();
 
   const {
@@ -60,10 +60,10 @@ export const LoginForm: React.FC = () => {
           onChange={(e) => setValue('Password', e.target.value, { shouldValidate: true })}
         />
       </Form.Item>
-      {!!apiErrors.login && (
+      {apiErrorMessages.login && (
         <Alert
           message="Login Failed"
-          description="Invalid email or password. Please try again."
+          description={apiErrorMessages.login}
           type="error"
           showIcon
           className="mb-4"

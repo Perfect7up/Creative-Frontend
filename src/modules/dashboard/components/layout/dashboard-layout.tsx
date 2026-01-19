@@ -37,6 +37,14 @@ const DashboardLayout: React.FC = () => {
     },
   ];
 
+  const handleLogoutClick = () => {
+    logout({
+      onSuccess: () => {
+        navigate('/login');
+      },
+    });
+  };
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider
@@ -79,7 +87,14 @@ const DashboardLayout: React.FC = () => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             <Dropdown
               menu={{
-                items: [{ key: '1', label: 'Logout', icon: <LogoutOutlined />, onClick: logout }],
+                items: [
+                  {
+                    key: '1',
+                    label: 'Logout',
+                    icon: <LogoutOutlined />,
+                    onClick: () => handleLogoutClick(),
+                  },
+                ],
               }}
             >
               <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8 }}>

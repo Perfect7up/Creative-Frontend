@@ -10,6 +10,7 @@ import type {
   ForgotPasswordRequest,
   ResetPasswordRequest,
 } from '~/modules/acount/types/auth.schema';
+import { getErrorMessage } from '~/core/utils/error-utils';
 
 export const useAuth = () => {
   const { accessToken, refreshToken, setTokens, clearAuth } = useAuthStore();
@@ -106,6 +107,12 @@ export const useAuth = () => {
     forgotPassword,
     resetPassword,
     useVerifyEmailQuery,
+    apiErrorMessages: {
+      login: getErrorMessage(loginMutation.error),
+      register: getErrorMessage(registerMutation.error),
+      forgot: getErrorMessage(forgotPasswordMutation.error),
+      reset: getErrorMessage(resetPasswordMutation.error),
+    },
     status: {
       isLoggingIn: loginMutation.isPending,
       isRegistering: registerMutation.isPending,

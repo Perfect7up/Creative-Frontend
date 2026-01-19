@@ -2,12 +2,13 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAuth } from '~/modules/acount/hook/use-auth';
 import { registerSchema, type RegisterFormData } from '../../schema/auth.schema';
+import { Alert } from 'antd';
 
 interface RegisterFormProps {
   onSuccess?: () => void;
 }
 export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
-  const { register: registerUser, status } = useAuth();
+  const { register: registerUser, status, apiErrorMessages } = useAuth();
 
   const {
     register,
@@ -84,6 +85,16 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
           <span className="text-red-500 text-xs">{errors.ConfirmPassword.message}</span>
         )}
       </div>
+      {apiErrorMessages.register && (
+        <Alert
+          message="Registration Error"
+          description={apiErrorMessages.register}
+          type="error"
+          showIcon
+          closable
+          className="mb-4"
+        />
+      )}
 
       <button
         type="submit"
