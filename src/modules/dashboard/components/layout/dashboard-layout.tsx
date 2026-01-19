@@ -8,7 +8,7 @@ import {
   MenuUnfoldOutlined,
 } from '@ant-design/icons';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '~/modules/acount/hook/use-auth';
+import { useAuth } from '~/modules/account/hook/use-auth';
 
 const { Header, Sider, Content } = Layout;
 
@@ -40,7 +40,7 @@ const DashboardLayout: React.FC = () => {
   const handleLogoutClick = () => {
     logout({
       onSuccess: () => {
-        navigate('/login');
+        navigate('/account/login', { replace: true });
       },
     });
   };
@@ -87,12 +87,16 @@ const DashboardLayout: React.FC = () => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             <Dropdown
               menu={{
+                onClick: ({ key }) => {
+                  if (key === 'logout') {
+                    handleLogoutClick();
+                  }
+                },
                 items: [
                   {
-                    key: '1',
+                    key: 'logout',
                     label: 'Logout',
                     icon: <LogoutOutlined />,
-                    onClick: () => handleLogoutClick(),
                   },
                 ],
               }}

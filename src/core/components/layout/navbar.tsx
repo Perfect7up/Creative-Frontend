@@ -18,7 +18,11 @@ const Navbar: React.FC = () => {
   const [themeMode, setThemeMode] = useState<'light' | 'dark' | 'system'>('system');
   const [isDark, setIsDark] = useState(false);
 
+  // Scroll Logic States
+  const [scrollDir, setScrollDir] = useState<'up' | 'down' | 'top'>('top');
+
   useEffect(() => {
+    // 1. Theme Logic
     const root = window.document.documentElement;
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
@@ -38,7 +42,28 @@ const Navbar: React.FC = () => {
       if (themeMode === 'system') applyTheme();
     };
     mediaQuery.addEventListener('change', listener);
-    return () => mediaQuery.removeEventListener('change', listener);
+
+    // 2. Optimized Scroll Logic
+    let lastScrollY = window.scrollY;
+
+    const updateScrollDir = () => {
+      const scrollY = window.scrollY;
+
+      if (scrollY <= 10) {
+        setScrollDir('top');
+      } else if (scrollY > lastScrollY) {
+        setScrollDir('down');
+      } else if (scrollY < lastScrollY) {
+        setScrollDir('up');
+      }
+      lastScrollY = scrollY > 0 ? scrollY : 0;
+    };
+
+    window.addEventListener('scroll', updateScrollDir);
+    return () => {
+      mediaQuery.removeEventListener('change', listener);
+      window.removeEventListener('scroll', updateScrollDir);
+    };
   }, [themeMode]);
 
   const menuItems: MenuProps['items'] = [
@@ -78,6 +103,9 @@ const Navbar: React.FC = () => {
     return <DesktopOutlined />;
   };
 
+  const visibilityClass = scrollDir === 'down' ? 'navbar-hidden' : 'navbar-visible';
+  const activeClass = scrollDir !== 'top' ? 'nav-container-active' : '';
+
   return (
     <ConfigProvider
       theme={{
@@ -89,19 +117,27 @@ const Navbar: React.FC = () => {
         },
       }}
     >
-      <Header className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[94%] max-w-360 h-auto transition-all duration-300">
-        <div className="bg-(--nav-bg) backdrop-blur-xl border border-(--nav-border) shadow-2xl rounded-4xl px-6 md:px-10 py-4 flex items-center justify-between transition-colors duration-500">
+      <Header
+        className={`fixed left-1/2 z-50 w-[94%] max-w-360 h-auto bg-transparent p-0 leading-none transition-all navbar-wrapper ${visibilityClass}`}
+        style={{ top: '24px' }}
+      >
+        <div
+          className={`bg-(--nav-bg) backdrop-blur-xl border border-(--nav-border) rounded-4xl px-6 md:px-10 py-4 flex items-center justify-between transition-all duration-500 ${activeClass}`}
+        >
           <div className="flex items-center shrink-0">
-            <span className="text-2xl md:text-3xl font-black tracking-tighter text-(--text-main) cursor-pointer select-none">
+            <a
+              href="/"
+              className="text-2xl md:text-3xl font-black tracking-tighter text-(--text-main) cursor-pointer select-none"
+            >
               Dev<span className="text-primary">Flow</span>
-            </span>
+            </a>
           </div>
 
           <div className="hidden lg:flex flex-1 justify-center px-4">
             <Menu
               mode="horizontal"
               items={menuItems}
-              className="modern-menu w-full max-w-md"
+              className="modern-menu w-full max-w-md border-none"
               disabledOverflow
             />
           </div>
@@ -113,21 +149,22 @@ const Navbar: React.FC = () => {
               placement="bottomRight"
             >
               <Button
-                className="theme-switcher-btn w-12 h-12 rounded-2xl text-xl"
+                className="theme-switcher-btn w-12! h-12! rounded-2xl!"
                 icon={getThemeIcon()}
               />
             </Dropdown>
 
             <Button
               type="text"
+              href="https://github.com/Perfect7up/Creative-Frontend"
+              target="_blank"
               icon={<GithubOutlined className="text-lg" />}
               className="flex items-center font-semibold text-(--text-muted) hover:text-primary transition-colors"
-            >
-              Star us
-            </Button>
+            />
 
             <Button
               type="text"
+              href="/account/login"
               className="font-bold text-(--text-main) px-6 h-12 hover:text-primary transition-colors"
             >
               Log in
@@ -135,7 +172,8 @@ const Navbar: React.FC = () => {
 
             <Button
               type="primary"
-              className="btn-get-started flex items-center gap-2 h-12 px-8 rounded-2xl font-bold"
+              href="/account/register"
+              className="btn-get-started flex items-center gap-2 h-12 px-8 rounded-2xl font-bold border-none"
             >
               Get Started <ArrowRightOutlined className="text-xs" />
             </Button>
@@ -170,7 +208,6 @@ const Navbar: React.FC = () => {
               borderBottom: '1px solid var(--nav-border)',
             },
           }}
-          className="dark:bg-slate-900"
           extra={
             <Button
               type="text"
@@ -187,29 +224,11 @@ const Navbar: React.FC = () => {
               items={menuItems}
               className="border-none text-lg bg-transparent font-medium mt-4 modern-menu"
             />
-
             <div className="mt-auto space-y-4 pb-10 px-4">
               <Button
                 block
                 size="large"
-                icon={<GithubOutlined />}
-                className="h-14 rounded-2xl font-bold text-(--text-main) border-(--nav-border)"
-              >
-                GitHub Repository
-              </Button>
-
-              <div className="flex items-center justify-between p-4 bg-(--nav-bg) rounded-2xl border border-(--nav-border)">
-                <span className="font-bold text-(--text-muted)">Appearance</span>
-                <Dropdown menu={{ items: themeOptions }} trigger={['click']}>
-                  <Button icon={getThemeIcon()} className="rounded-xl font-bold uppercase text-xs">
-                    {themeMode}
-                  </Button>
-                </Dropdown>
-              </div>
-
-              <Button
-                block
-                size="large"
+                href="/account/login"
                 className="h-14 rounded-2xl font-bold text-(--text-main) border-(--nav-border)"
               >
                 Log in
@@ -218,7 +237,8 @@ const Navbar: React.FC = () => {
                 block
                 type="primary"
                 size="large"
-                className="btn-get-started h-14 rounded-2xl"
+                href="/account/register"
+                className="btn-get-started h-14 rounded-2xl font-bold"
               >
                 Get Started Free
               </Button>
@@ -227,8 +247,7 @@ const Navbar: React.FC = () => {
         </Drawer>
       </Header>
 
-      {/* Spacing spacer restored */}
-      <div className="h-35" />
+      <div className="h-28" />
     </ConfigProvider>
   );
 };

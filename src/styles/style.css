@@ -34,7 +34,7 @@
 }
 
 .theme-switcher-btn .anticon {
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.4s cubic-bezier(0.2, 0, 0.1, 0);
 }
 
 .theme-switcher-btn:hover {
@@ -90,4 +90,114 @@
   color: var(--primary-blue) !important;
   border-color: var(--primary-blue) !important;
   transform: translateY(-3px);
+}
+
+.modern-form-container {
+  background: var(--card-bg);
+  border: 1px solid var(--nav-border);
+  color: var(--text-main);
+}
+
+.ant-form-item-label > label {
+  color: var(--text-main) !important;
+  font-weight: 600 !important;
+}
+
+.ant-input,
+.ant-input-password,
+.ant-input-affix-wrapper {
+  background-color: var(--input-bg) !important;
+  border-color: var(--nav-border) !important;
+  color: var(--text-main) !important;
+}
+
+.ant-input::placeholder {
+  color: var(--text-muted) !important;
+}
+
+.ant-input-prefix {
+  color: var(--text-muted) !important;
+  margin-right: 8px;
+}
+
+.ant-input-affix-wrapper:focus,
+.ant-input-affix-wrapper-focused,
+.ant-input:focus {
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.1) !important;
+}
+
+.auth-alert {
+  border-radius: 12px !important;
+  border: 1px solid rgba(239, 68, 68, 0.2) !important;
+}
+
+.navbar-wrapper {
+  transition:
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.4s ease,
+    padding 0.4s ease !important;
+  will-change: transform;
+}
+
+.navbar-visible {
+  transform: translate(-50%, 0) scale(1);
+  opacity: 1;
+}
+
+.navbar-hidden {
+  transform: translate(-50%, -130%) scale(0.95);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.nav-container-active {
+  box-shadow:
+    0 20px 40px -10px rgba(0, 0, 0, 0.1),
+    0 0 0 1px var(--nav-border);
+}
+
+.dark .nav-container-active {
+  box-shadow:
+    0 20px 40px -15px rgba(0, 0, 0, 0.5),
+    0 0 0 1px var(--nav-border);
+}
+
+.ant-breadcrumb {
+  color: var(--text-muted) !important;
+}
+.ant-breadcrumb .ant-breadcrumb-separator {
+  color: var(--text-muted) !important;
+}
+.ant-breadcrumb a:hover {
+  color: var(--primary-color) !important;
+  background: transparent !important;
+}
+
+.ant-input-affix-wrapper {
+  color: var(--text-main) !important;
+}
+.ant-input-affix-wrapper .ant-input {
+  color: var(--text-main) !important;
+}
+.ant-input-prefix {
+  color: var(--text-muted) !important;
+}
+
+.ant-form-item-label > label {
+  color: var(--text-main) !important;
+}
+
+.ant-input-password-icon {
+  color: var(--text-muted) !important;
+  font-size: 1.1rem !important;
+  transition: color 0.3s ease !important;
+}
+
+.ant-input-password-icon:hover {
+  color: var(--text-main) !important;
+}
+
+.ant-input-suffix {
+  color: var(--text-muted) !important;
 }

@@ -8,7 +8,7 @@ import {
   type RequestFnResponse,
 } from '@openapi-qraft/react';
 import { v4 as uuidv4 } from 'uuid';
-import { useAuthStore } from '../modules/acount/store/auth-store';
+import { useAuthStore } from '../modules/account/store/auth-store';
 import { statusMessages } from '../core/utils/status-code-utils';
 
 export const DEDUP_TTL_MS = 5_000;

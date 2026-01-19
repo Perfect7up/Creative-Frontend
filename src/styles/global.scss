@@ -1,6 +1,8 @@
 :root {
   --nav-bg: rgba(255, 255, 255, 0.7);
   --nav-border: rgba(226, 232, 240, 0.8);
+  --card-bg: #ffffff;
+  --input-bg: #ffffff;
   --text-main: #0f172a;
   --text-muted: #64748b;
   --primary-color: #1d4ed8;
@@ -12,6 +14,8 @@
 .dark {
   --nav-bg: rgba(15, 23, 42, 0.8);
   --nav-border: rgba(51, 65, 85, 0.5);
+  --card-bg: #1e293b;
+  --input-bg: #0f172a;
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
   --btn-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);

@@ -1,5 +1,5 @@
 import { authApi } from '~/api/api-services';
-import { useAuthStore } from '~/modules/acount/store/auth-store';
+import { useAuthStore } from '~/modules/account/store/auth-store';
 import { queryClient } from '~/api/query-client-setup';
 import type {
   LoginRequest,
@@ -9,7 +9,7 @@ import type {
   RefreshTokenRequest,
   ForgotPasswordRequest,
   ResetPasswordRequest,
-} from '~/modules/acount/types/auth.schema';
+} from '~/modules/account/types/auth.schema';
 import { getErrorMessage } from '~/core/utils/error-utils';
 
 export const useAuth = () => {
@@ -17,21 +17,23 @@ export const useAuth = () => {
   const service = authApi.auth;
 
   const loginMutation = service.creativeAuthApiEndpointsAuthLoginLogin.useMutation(undefined, {
-    onSuccess: (data: AuthResponse) => {
-      if (data.Token && data.RefreshToken) {
-        setTokens(data.Token, data.RefreshToken);
+    onSuccess: (data: any) => {
+      console.log('Raw API response:', data);
+      const accessToken = data.Token || data.token;
+      const refreshToken = data.RefreshToken || data.refreshToken;
+
+      if (accessToken && refreshToken) {
+        console.log('Setting tokens:', { accessToken, refreshToken });
+        setTokens(accessToken, refreshToken);
+      } else {
+        console.error('Tokens missing:', data);
       }
     },
   });
 
   const registerMutation = service.creativeAuthApiEndpointsAuthRegisterRegister.useMutation();
 
-  const logoutMutation = service.creativeAuthApiEndpointsAuthLogoutLogout.useMutation(undefined, {
-    onSuccess: () => {
-      clearAuth();
-      queryClient.clear();
-    },
-  });
+  const logoutMutation = service.creativeAuthApiEndpointsAuthLogoutLogout.useMutation();
 
   const refreshMutation = service.creativeAuthApiEndpointsAuthRefreshTokenRefreshToken.useMutation(
     undefined,
@@ -86,14 +88,37 @@ export const useAuth = () => {
     }
   };
 
-  const logout = (options?: Parameters<typeof logoutMutation.mutate>[1]) => {
-    if (refreshToken) {
-      const payload: LogoutRequest = { RefreshToken: refreshToken };
-      logoutMutation.mutate({ body: payload }, options);
-    } else {
+  const logout = (options?: {
+    onSuccess?: (data: unknown) => void;
+    onError?: (error: unknown) => void;
+  }) => {
+    const doClientLogout = () => {
       clearAuth();
       queryClient.clear();
+    };
+
+    if (!refreshToken) {
+      doClientLogout();
+      options?.onSuccess?.(null);
+      return;
     }
+
+    const payload: LogoutRequest = { RefreshToken: refreshToken };
+
+    logoutMutation.mutate(
+      { body: payload },
+      {
+        onSettled: () => {
+          doClientLogout();
+          options?.onSuccess?.(null);
+        },
+
+        onError: (err) => {
+          doClientLogout();
+          options?.onError?.(err);
+        },
+      },
+    );
   };
 
   return {

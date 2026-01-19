@@ -13,9 +13,17 @@ export const useAuthStore = create<AuthState>()(
     (set) => ({
       accessToken: null,
       refreshToken: null,
-      setTokens: (access, refresh) => set({ accessToken: access, refreshToken: refresh }),
+      setTokens: (access, refresh) => {
+        console.log('Setting tokens:', { access, refresh });
+        set({ accessToken: access, refreshToken: refresh });
+      },
       clearAuth: () => set({ accessToken: null, refreshToken: null }),
     }),
-    { name: 'auth-storage' },
+    {
+      name: 'auth-storage',
+      onRehydrateStorage: () => (state) => {
+        console.log('Store rehydrated:', state);
+      },
+    },
   ),
 );
