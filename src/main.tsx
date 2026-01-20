@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { QueryClientProvider } from '@tanstack/react-query';
+import { BrowserRouter } from 'react-router-dom';
 
 import './styles/style.css';
 import './styles/global.scss';
@@ -19,7 +20,9 @@ createRoot(root).render(
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <AppInitializer>
-          <App />
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
         </AppInitializer>
       </QueryClientProvider>
     </ErrorBoundary>

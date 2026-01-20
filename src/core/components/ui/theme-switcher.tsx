@@ -1,38 +1,55 @@
 import React from 'react';
 import { Button, Dropdown } from 'antd';
-
 import type { MenuProps } from 'antd';
-
 import { SunOutlined, MoonOutlined, DesktopOutlined, CheckOutlined } from '@ant-design/icons';
+import { useTheme } from '../../hooks/use-theme';
 
 interface Props {
-  themeMode: 'light' | 'dark' | 'system';
-  setThemeMode: (mode: 'light' | 'dark' | 'system') => void;
   size?: 'small' | 'large';
 }
 
-const ThemeSwitcher: React.FC<Props> = ({ themeMode, setThemeMode, size = 'large' }) => {
+const ThemeSwitcher: React.FC<Props> = ({ size = 'large' }) => {
+  const { themeMode, setThemeMode } = useTheme();
+
   const themeOptions: MenuProps['items'] = [
     {
       key: 'light',
-      label: 'Light',
-      icon: <SunOutlined />,
+      label: (
+        <div className="flex items-center justify-between w-full">
+          <div className="flex items-center gap-2">
+            <SunOutlined />
+            <span>Light</span>
+          </div>
+          {themeMode === 'light' && <CheckOutlined className="text-blue-600" />}
+        </div>
+      ),
       onClick: () => setThemeMode('light'),
-      extra: themeMode === 'light' && <CheckOutlined className="text-blue-600" />,
     },
     {
       key: 'dark',
-      label: 'Dark',
-      icon: <MoonOutlined />,
+      label: (
+        <div className="flex items-center justify-between w-full">
+          <div className="flex items-center gap-2">
+            <MoonOutlined />
+            <span>Dark</span>
+          </div>
+          {themeMode === 'dark' && <CheckOutlined className="text-blue-600" />}
+        </div>
+      ),
       onClick: () => setThemeMode('dark'),
-      extra: themeMode === 'dark' && <CheckOutlined className="text-blue-600" />,
     },
     {
       key: 'system',
-      label: 'System',
-      icon: <DesktopOutlined />,
+      label: (
+        <div className="flex items-center justify-between w-full">
+          <div className="flex items-center gap-2">
+            <DesktopOutlined />
+            <span>System</span>
+          </div>
+          {themeMode === 'system' && <CheckOutlined className="text-blue-600" />}
+        </div>
+      ),
       onClick: () => setThemeMode('system'),
-      extra: themeMode === 'system' && <CheckOutlined className="text-blue-600" />,
     },
   ];
 
@@ -43,13 +60,11 @@ const ThemeSwitcher: React.FC<Props> = ({ themeMode, setThemeMode, size = 'large
   };
 
   return (
-    <Dropdown
-      menu={{ items: themeOptions, selectable: true, selectedKeys: [themeMode] }}
-      trigger={['click']}
-    >
+    <Dropdown menu={{ items: themeOptions }} trigger={['click']} placement="bottomRight">
       <Button
         className={`theme-switcher-btn ${size === 'small' ? 'w-11 h-11 rounded-xl' : 'w-12 h-12 rounded-2xl'}`}
         icon={getThemeIcon()}
+        aria-label="Toggle theme"
       />
     </Dropdown>
   );

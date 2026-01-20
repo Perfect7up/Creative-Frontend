@@ -6,52 +6,27 @@ import NavMenu from '../ui/nav-menu';
 import ThemeSwitcher from '../ui/theme-switcher';
 import NavButtons from '../ui/nav-buttons';
 import MobileMenuDrawer from '../ui/mobile-menu-drawer';
+import { useTheme } from '../../hooks/use-theme';
 
 const { Header } = Layout;
 
 const Navbar: React.FC = () => {
   const [open, setOpen] = useState(false);
-  const [themeMode, setThemeMode] = useState<'light' | 'dark' | 'system'>('system');
-  const [isDark, setIsDark] = useState(false);
   const [scrollDir, setScrollDir] = useState<'up' | 'down' | 'top'>('top');
 
+  const { isDark } = useTheme();
+
   useEffect(() => {
-    const root = window.document.documentElement;
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
-    const applyTheme = () => {
-      const activeDark =
-        themeMode === 'dark' ? true : themeMode === 'light' ? false : mediaQuery.matches;
-      setIsDark(activeDark);
-
-      if (activeDark) {
-        root.classList.add('dark');
-      } else {
-        root.classList.remove('dark');
-      }
-    };
-
-    applyTheme();
-
-    const listener = () => {
-      if (themeMode === 'system') applyTheme();
-    };
-
-    mediaQuery.addEventListener('change', listener);
-
     let lastScrollY = window.scrollY;
     const updateScrollDir = () => {
       const scrollY = window.scrollY;
       setScrollDir(scrollY <= 10 ? 'top' : scrollY > lastScrollY ? 'down' : 'up');
       lastScrollY = scrollY > 0 ? scrollY : 0;
     };
-    window.addEventListener('scroll', updateScrollDir);
 
-    return () => {
-      mediaQuery.removeEventListener('change', listener);
-      window.removeEventListener('scroll', updateScrollDir);
-    };
-  }, [themeMode]);
+    window.addEventListener('scroll', updateScrollDir);
+    return () => window.removeEventListener('scroll', updateScrollDir);
+  }, []);
 
   const menuItems = [
     { label: 'Features', key: 'features' },
@@ -88,16 +63,20 @@ const Navbar: React.FC = () => {
             <NavMenu items={menuItems} className="modern-menu w-full max-w-md border-none" />
           </div>
 
-          <NavButtons />
-
-          <div className="lg:hidden flex items-center gap-3">
-            <ThemeSwitcher themeMode={themeMode} setThemeMode={setThemeMode} size="small" />
-            <button
-              className="w-11 h-11 flex items-center justify-center bg-(--nav-border) text-(--text-main) rounded-xl"
-              onClick={() => setOpen(true)}
-            >
-              <MenuOutlined className="text-xl" />
-            </button>
+          <div className="flex items-center gap-3">
+            <div className="hidden lg:flex">
+              <ThemeSwitcher />
+            </div>
+            <NavButtons />
+            <div className="lg:hidden flex items-center gap-3">
+              <ThemeSwitcher size="small" />
+              <button
+                className="w-11 h-11 flex items-center justify-center bg-(--nav-border) text-(--text-main) rounded-xl"
+                onClick={() => setOpen(true)}
+              >
+                <MenuOutlined className="text-xl" />
+              </button>
+            </div>
           </div>
         </div>
 

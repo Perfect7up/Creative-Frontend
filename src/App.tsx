@@ -1,5 +1,6 @@
 import { Suspense, useEffect } from 'react';
 import AppRouter from './core/routes/routes';
+import { ThemeProvider } from './core/context/theme-context';
 
 const App = () => {
   useEffect(() => {
@@ -20,11 +21,15 @@ const App = () => {
   }, []);
 
   return (
-    <Suspense
-      fallback={<div className="flex h-screen items-center justify-center">Loading...</div>}
-    >
-      <AppRouter />
-    </Suspense>
+    <ThemeProvider>
+      {' '}
+      {/* Wrap everything with ThemeProvider */}
+      <Suspense
+        fallback={<div className="flex h-screen items-center justify-center">Loading...</div>}
+      >
+        <AppRouter />
+      </Suspense>
+    </ThemeProvider>
   );
 };
 
