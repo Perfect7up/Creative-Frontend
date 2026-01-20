@@ -1,18 +1,27 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 
 import './styles/style.css';
 import './styles/global.scss';
 
-import App from './App.tsx';
+import { queryClient } from './core/react-query/query-client';
+import { AppInitializer } from './core/auth/app-initializer';
+import App from './App';
+import { ErrorBoundary } from './core/errors/error-boundary';
 
-const queryClient = new QueryClient();
+const root = document.getElementById('root');
 
-createRoot(document.getElementById('root')!).render(
+if (!root) throw new Error('Root element not found');
+
+createRoot(root).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <App />
-    </QueryClientProvider>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <AppInitializer>
+          <App />
+        </AppInitializer>
+      </QueryClientProvider>
+    </ErrorBoundary>
   </StrictMode>,
 );

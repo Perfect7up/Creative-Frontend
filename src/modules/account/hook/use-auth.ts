@@ -52,6 +52,26 @@ export const useAuth = () => {
   const resetPasswordMutation =
     service.creativeAuthApiEndpointsAuthResetPasswordResetPassword.useMutation();
 
+  const initializeAuth = async () => {
+    // No tokens at all → guest mode
+    if (!accessToken) {
+      return;
+    }
+
+    try {
+      // Try to refresh session silently
+      await new Promise<void>((resolve, reject) => {
+        refresh({
+          onSuccess: () => resolve(),
+          onError: () => reject(),
+        });
+      });
+    } catch {
+      clearAuth();
+      queryClient.clear();
+    }
+  };
+
   const useVerifyEmailQuery = (token: string | null) =>
     service.creativeAuthApiEndpointsAuthVerifyEmailVerifyEmail.useQuery(
       { query: { Token: token ?? '' } },
@@ -125,6 +145,7 @@ export const useAuth = () => {
     isAuthenticated: !!accessToken,
     accessToken,
     refreshToken,
+    initializeAuth,
     login,
     register,
     logout,
